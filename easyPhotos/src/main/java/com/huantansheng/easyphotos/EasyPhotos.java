@@ -122,7 +122,66 @@ public class EasyPhotos {
         return AlbumBuilder.createAlbum(fragmentV, isShowCamera).setUseWidth(useWidth);
     }
 
+    /*******************/
+    public static AlbumBuilder createPreview(androidx.fragment.app.Fragment fragmentV,
+                                             ArrayList<Photo> items, int currentIndex, boolean showDownload) {
+        return AlbumBuilder.createPreview(fragmentV, items).setCurrentIndex(currentIndex).setShowDownload(showDownload);
+    }
 
+    public static AlbumBuilder createPreview(Activity activity,
+                                             ArrayList<Photo> items, int currentIndex, boolean showDownload) {
+        return AlbumBuilder.createPreview(activity, items).setCurrentIndex(currentIndex).setShowDownload(showDownload);
+    }
+
+    public static AlbumBuilder createPreview(Fragment fragment,
+                                             ArrayList<Photo> items, int currentIndex, boolean showDownload) {
+        return AlbumBuilder.createPreview(fragment, items).setCurrentIndex(currentIndex).setShowDownload(showDownload);
+    }
+
+    public static AlbumBuilder createPreview(FragmentActivity activity,
+                                             ArrayList<Photo> items, int currentIndex, boolean showDownload) {
+        return AlbumBuilder.createPreview(activity, items).setCurrentIndex(currentIndex).setShowDownload(showDownload);
+    }
+    /*******************/
+    public static AlbumBuilder createPreview(androidx.fragment.app.Fragment fragmentV,
+                                             ArrayList<Photo> items, int currentIndex) {
+        return AlbumBuilder.createPreview(fragmentV, items).setCurrentIndex(currentIndex);
+    }
+
+    public static AlbumBuilder createPreview(Activity activity,
+                                             ArrayList<Photo> items, int currentIndex) {
+        return AlbumBuilder.createPreview(activity, items).setCurrentIndex(currentIndex);
+    }
+
+    public static AlbumBuilder createPreview(Fragment fragment,
+                                             ArrayList<Photo> items, int currentIndex) {
+        return AlbumBuilder.createPreview(fragment, items).setCurrentIndex(currentIndex);
+    }
+
+    public static AlbumBuilder createPreview(FragmentActivity activity,
+                                             ArrayList<Photo> items, int currentIndex) {
+        return AlbumBuilder.createPreview(activity, items).setCurrentIndex(currentIndex);
+    }
+    /*******************/
+    public static AlbumBuilder createPreview(androidx.fragment.app.Fragment fragmentV,
+                                             ArrayList<Photo> items) {
+        return AlbumBuilder.createPreview(fragmentV, items);
+    }
+
+    public static AlbumBuilder createPreview(Activity activity,
+                                             ArrayList<Photo> items) {
+        return AlbumBuilder.createPreview(activity, items);
+    }
+
+    public static AlbumBuilder createPreview(Fragment fragment,
+                                             ArrayList<Photo> items) {
+        return AlbumBuilder.createPreview(fragment, items);
+    }
+
+    public static AlbumBuilder createPreview(FragmentActivity activity,
+                                             ArrayList<Photo> items) {
+        return AlbumBuilder.createPreview(activity, items);
+    }
 //*********************AD************************************
 
 

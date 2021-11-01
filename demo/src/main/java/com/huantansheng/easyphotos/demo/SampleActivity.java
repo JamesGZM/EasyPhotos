@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.SnapHelper;
 
 import com.google.android.material.navigation.NavigationView;
 import com.huantansheng.easyphotos.EasyPhotos;
+import com.huantansheng.easyphotos.callback.PreviewCallback;
 import com.huantansheng.easyphotos.callback.PuzzleCallback;
 import com.huantansheng.easyphotos.callback.SelectCallback;
 import com.huantansheng.easyphotos.constant.Type;
@@ -172,9 +173,26 @@ public class SampleActivity extends AppCompatActivity
         switch (id) {
             case R.id.camera://单独使用相机
 
-                EasyPhotos.createCamera(this, true)
-                        .setFileProviderAuthority("com.huantansheng.easyphotos.demo.fileprovider")
-                        .start(101);//也可以选择链式调用写法
+//                EasyPhotos.createCamera(this, true)
+//                        .setFileProviderAuthority("com.huantansheng.easyphotos.demo.fileprovider")
+//                        .start(101);//也可以选择链式调用写法
+
+                ArrayList<Photo> photos = new ArrayList<Photo>();
+                photos.add(new Photo("https://t8.baidu.com/it/u=3884174989,460317324&fm=218&app=92&f=JPEG?w=121&h=75&s=B833089A7AF309A534A3B2D6030050AB"));
+                photos.add(new Photo("https://www.bing.com/az/hprichbg/rb/FrozenWaterfallJasper_EN-CA10140771944_1920x1080.jpg"));
+                photos.add(new Photo("https://www.bing.com/az/hprichbg/rb/FrozenWaterfallJasper_EN-CA10140771944_1920x1080.jpg"));
+                photos.add(new Photo("https://www.bing.com/az/hprichbg/rb/FrozenWaterfallJasper_EN-CA10140771944_1920x1080.jpg"));
+                photos.add(new Photo("https://www.bing.com/az/hprichbg/rb/FrozenWaterfallJasper_EN-CA10140771944_1920x1080.jpg"));
+                photos.add(new Photo("https://www.bing.com/az/hprichbg/rb/FrozenWaterfallJasper_EN-CA10140771944_1920x1080.jpg"));
+                photos.add(new Photo("https://www.bing.com/az/hprichbg/rb/FrozenWaterfallJasper_EN-CA10140771944_1920x1080.jpg"));
+                EasyPhotos
+                        .createPreview(this, photos)
+                        .start(new PreviewCallback() {
+                            @Override
+                            public void onDownload(Photo photo) {
+                                Toast.makeText(SampleActivity.this, photo.uri.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
                 break;
 

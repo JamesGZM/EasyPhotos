@@ -27,6 +27,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/EasyPhotosFullscreenTheme" />
         <activity
+            android:name=".ui.Preview2Activity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/EasyPhotosFullscreenTheme" />
+        <activity
             android:name=".ui.PuzzleActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"

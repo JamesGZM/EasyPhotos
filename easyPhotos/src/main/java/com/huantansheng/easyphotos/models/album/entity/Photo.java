@@ -25,7 +25,7 @@ public class Photo implements Parcelable {
     public boolean selected;//是否被选中,内部使用,无需关心
     public boolean selectedOriginal;//用户选择时是否选择了原图选项
 
-    public Photo(String name, Uri uri, String path, long time, int width, int height,int orientation, long size, long duration, String type) {
+    public Photo(String name, Uri uri, String path, long time, int width, int height, int orientation, long size, long duration, String type) {
         this.name = name;
         this.uri = uri;
         this.path = path;
@@ -36,6 +36,36 @@ public class Photo implements Parcelable {
         this.type = type;
         this.size = size;
         this.duration = duration;
+        this.selected = false;
+        this.selectedOriginal = false;
+    }
+
+    public Photo(String path) {
+        this.path = path;
+        this.uri = Uri.parse(path);
+        this.type = "image/png";
+        this.name = "";
+        this.time = 0;
+        this.width = 0;
+        this.height = 0;
+        this.orientation = 0;
+        this.size = 0;
+        this.duration = 0;
+        this.selected = false;
+        this.selectedOriginal = false;
+    }
+
+    public Photo(Uri uri) {
+        this.uri = uri;
+        this.path = uri.getPath();
+        this.type = "image/png";
+        this.name = "";
+        this.time = 0;
+        this.width = 0;
+        this.height = 0;
+        this.orientation = 0;
+        this.size = 0;
+        this.duration = 0;
         this.selected = false;
         this.selectedOriginal = false;
     }

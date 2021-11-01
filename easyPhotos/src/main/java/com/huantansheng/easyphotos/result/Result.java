@@ -9,6 +9,7 @@ import com.huantansheng.easyphotos.models.album.entity.Photo;
 import com.huantansheng.easyphotos.setting.Setting;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 存储的返回图片集
@@ -21,6 +22,18 @@ public class Result {
     public static final int PICTURE_OUT = -1;
     public static final int VIDEO_OUT = -2;
     public static final int SINGLE_TYPE = -3;
+
+    /**
+     * 设置预览数组
+     *
+     * @param items
+     * @return
+     */
+    public static void setPreviewPhotos(List<Photo> items) {
+        if (items == null) return;
+        photos.clear();
+        photos.addAll(items);
+    }
 
     /**
      * @return 0：添加成功 -2：超过视频选择数 -1：超过图片选择数

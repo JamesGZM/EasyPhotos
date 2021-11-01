@@ -1,8 +1,10 @@
 package com.huantansheng.easyphotos.setting;
 
 import androidx.annotation.IntDef;
+
 import android.view.View;
 
+import com.huantansheng.easyphotos.callback.PreviewCallback;
 import com.huantansheng.easyphotos.constant.Type;
 import com.huantansheng.easyphotos.models.album.entity.Photo;
 
@@ -53,6 +55,11 @@ public class Setting {
     public static int complexVideoCount = 0;
     public static int complexPictureCount = 0;
 
+    //预览使用 其他无关
+    public static int currentIndex = 0; //当前预览下标
+    public static boolean showDownload = false;//是否显示下载按钮
+    public static PreviewCallback mPreviewCallback = null;//回调点击下载
+
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(value = {LIST_FIRST, BOTTOM_RIGHT})
     public @interface Location {
@@ -88,6 +95,10 @@ public class Setting {
         complexSingleType = false;
         complexVideoCount = 0;
         complexPictureCount = 0;
+
+        currentIndex = 0;
+        showDownload = false;
+        mPreviewCallback = null;
     }
 
     public static boolean isFilter(String type) {

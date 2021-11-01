@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import com.huantansheng.easyphotos.callback.PreviewCallback;
 import com.huantansheng.easyphotos.callback.SelectCallback;
 import com.huantansheng.easyphotos.constant.Type;
 import com.huantansheng.easyphotos.models.ad.AdListener;
@@ -15,6 +16,7 @@ import com.huantansheng.easyphotos.models.album.entity.Photo;
 import com.huantansheng.easyphotos.result.Result;
 import com.huantansheng.easyphotos.setting.Setting;
 import com.huantansheng.easyphotos.ui.EasyPhotosActivity;
+import com.huantansheng.easyphotos.ui.Preview2Activity;
 import com.huantansheng.easyphotos.utils.result.EasyResult;
 import com.huantansheng.easyphotos.utils.uri.UriUtils;
 
@@ -34,11 +36,13 @@ public class AlbumBuilder {
      * CAMERA-相机
      * ALBUM-相册专辑
      * ALBUM_CAMERA-带有相机按钮的相册专辑
+     * PREVIEW-预览
      */
     private enum StartupType {
         CAMERA,
         ALBUM,
-        ALBUM_CAMERA
+        ALBUM_CAMERA,
+        PREVIEW,
     }
 
     private static final String TAG = "com.huantansheng.easyphotos";
@@ -164,6 +168,31 @@ public class AlbumBuilder {
         } else {
             return AlbumBuilder.with(fragmentV, StartupType.ALBUM);
         }
+    }
+
+    public static AlbumBuilder createPreview(Activity activity, ArrayList<Photo> items) {
+        AlbumBuilder builder = AlbumBuilder.with(activity, StartupType.PREVIEW);
+        Result.setPreviewPhotos(items);
+        return builder;
+    }
+
+    public static AlbumBuilder createPreview(android.app.Fragment fragment, ArrayList<Photo> items) {
+        AlbumBuilder builder = AlbumBuilder.with(fragment, StartupType.PREVIEW);
+        Result.setPreviewPhotos(items);
+        return builder;
+    }
+
+    public static AlbumBuilder createPreview(FragmentActivity activity, ArrayList<Photo> items) {
+        AlbumBuilder builder = AlbumBuilder.with(activity, StartupType.PREVIEW);
+        Result.setPreviewPhotos(items);
+        return builder;
+    }
+
+
+    public static AlbumBuilder createPreview(Fragment fragmentV, ArrayList<Photo> items) {
+        AlbumBuilder builder = AlbumBuilder.with(fragmentV, StartupType.PREVIEW);
+        Result.setPreviewPhotos(items);
+        return builder;
     }
 
     /**
@@ -418,6 +447,16 @@ public class AlbumBuilder {
         return AlbumBuilder.this;
     }
 
+    public AlbumBuilder setCurrentIndex(int currentIndex) {
+        Setting.currentIndex = currentIndex;
+        return AlbumBuilder.this;
+    }
+
+    public AlbumBuilder setShowDownload(boolean showDownload) {
+        Setting.showDownload = showDownload;
+        return AlbumBuilder.this;
+    }
+
     private void setSettingParams() {
         switch (startupType) {
             case CAMERA:
@@ -459,6 +498,18 @@ public class AlbumBuilder {
         launchEasyPhotosActivity(requestCode);
     }
 
+    //打开预览
+    public void start() {
+        launchPreviewActivity();
+    }
+
+    //打开预览
+    public void start(PreviewCallback callback) {
+        Setting.mPreviewCallback = callback;
+        Setting.showDownload = true;
+        launchPreviewActivity();
+    }
+
     /**
      * 启动，链式调用
      */
@@ -492,6 +543,23 @@ public class AlbumBuilder {
         }
         if (null != mFragmentV && null != mFragmentV.get()) {
             EasyPhotosActivity.start(mFragmentV.get(), requestCode);
+        }
+    }
+
+    /**
+     * 正式启动预览
+     */
+    private void launchPreviewActivity() {
+        if (null != mActivity && null != mActivity.get()) {
+            Preview2Activity.start(mActivity.get());
+            return;
+        }
+        if (null != mFragment && null != mFragment.get()) {
+            Preview2Activity.start(mFragment.get());
+            return;
+        }
+        if (null != mFragmentV && null != mFragmentV.get()) {
+            Preview2Activity.start(mFragmentV.get());
         }
     }
 
