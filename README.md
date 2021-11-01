@@ -84,7 +84,7 @@ allprojects {
 ```gradle
 dependencies {  
         //fresco 版本
-        implementation 'com.github.JamesGZM:EasyPhotos:v1.0.1' //androidx版本，支持android 10、11，永久维护
+        implementation 'com.github.JamesGZM:EasyPhotos:3.1.4-fresco' //androidx版本，支持android 10、11，永久维护
         
    
 }
