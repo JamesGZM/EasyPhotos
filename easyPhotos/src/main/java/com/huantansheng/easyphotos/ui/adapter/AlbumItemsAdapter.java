@@ -12,6 +12,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.huantansheng.easyphotos.R;
 import com.huantansheng.easyphotos.models.ad.AdViewHolder;
@@ -74,8 +76,13 @@ public class AlbumItemsAdapter extends RecyclerView.Adapter {
                 ((AlbumItemsViewHolder) holder).mRoot.setPadding(padding, padding, padding, 0);
             }
             AlbumItem item = (AlbumItem) dataList.get(p);
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setUri(item.coverImageUri)
+                    .setAutoPlayAnimations(true)
+                    .setOldController(((AlbumItemsViewHolder) holder).ivAlbumCover.getController())
+                    .build();
+            ((AlbumItemsViewHolder) holder).ivAlbumCover.setController(controller);
 
-            ((AlbumItemsViewHolder) holder).ivAlbumCover.setImageURI(item.coverImageUri);
 
             ((AlbumItemsViewHolder) holder).tvAlbumName.setText(item.name);
             ((AlbumItemsViewHolder) holder).tvAlbumPhotosCount.setText(String.valueOf(item.photos.size()));

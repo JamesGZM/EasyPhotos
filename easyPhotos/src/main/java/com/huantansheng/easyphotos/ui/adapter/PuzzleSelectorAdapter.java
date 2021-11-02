@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.huantansheng.easyphotos.R;
 import com.huantansheng.easyphotos.constant.Type;
@@ -65,7 +67,13 @@ public class PuzzleSelectorAdapter extends RecyclerView.Adapter {
         } else {
             ((PhotoViewHolder) holder).tvType.setVisibility(View.GONE);
         }
-        ((PhotoViewHolder) holder).ivPhoto.setImageURI(uri);
+
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setUri(uri)
+                .setAutoPlayAnimations(true)
+                .setOldController(((PhotoViewHolder) holder).ivPhoto.getController())
+                .build();
+        ((PhotoViewHolder) holder).ivPhoto.setController(controller);
 
         ((PhotoViewHolder) holder).ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override

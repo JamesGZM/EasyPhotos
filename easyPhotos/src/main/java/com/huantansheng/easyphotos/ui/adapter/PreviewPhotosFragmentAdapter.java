@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.huantansheng.easyphotos.R;
 import com.huantansheng.easyphotos.constant.Type;
@@ -57,7 +59,12 @@ public class PreviewPhotosFragmentAdapter extends RecyclerView.Adapter<PreviewPh
             holder.tvType.setVisibility(View.GONE);
         }
 
-        holder.ivPhoto.setImageURI(uri);
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setUri(uri)
+                .setAutoPlayAnimations(true)
+                .setOldController(holder.ivPhoto.getController())
+                .build();
+        holder.ivPhoto.setController(controller);
 
         if (checkedPosition == p) {
             holder.frame.setVisibility(View.VISIBLE);
