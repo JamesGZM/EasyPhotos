@@ -119,10 +119,10 @@ public class Preview2Activity extends AppCompatActivity implements PreviewPhotos
 
         hideActionBar();
         adaptationStatusBar();
-        if (null == AlbumModel.instance) {
-            finish();
-            return;
-        }
+//        if (null == AlbumModel.instance) {
+//            finish();
+//            return;
+//        }
         initData();
         initView();
     }
