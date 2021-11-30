@@ -2,7 +2,7 @@ package com.huantansheng.easyphotos.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PointF;
+import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -15,10 +15,9 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.imagepipeline.common.ResizeOptions;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.imagepipeline.image.ImageInfo;
 import com.huantansheng.easyphotos.R;
 import com.huantansheng.easyphotos.constant.Type;
 import com.huantansheng.easyphotos.models.album.entity.Photo;
@@ -77,7 +76,21 @@ public class PreviewPhotosAdapter extends RecyclerView.Adapter<PreviewPhotosAdap
                 }
             });
         }
-        holder.ivZoomView.setPhotoUri(uri);
+        PipelineDraweeControllerBuilder controller = Fresco.newDraweeControllerBuilder();
+        controller.setUri(uri);
+        controller.setAutoPlayAnimations(true); // 这句话让gif动
+        controller.setOldController(holder.ivZoomView.getController());
+        controller.setControllerListener(new BaseControllerListener<ImageInfo>() {
+            @Override
+            public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+                super.onFinalImageSet(id, imageInfo, animatable);
+                if (imageInfo == null || holder.ivZoomView == null) {
+                    return;
+                }
+                holder.ivZoomView.update(imageInfo.getWidth(), imageInfo.getHeight());
+            }
+        });
+        holder.ivZoomView.setController(controller.build());
 
         holder.ivZoomView.setScale(1.0f);
         holder.ivZoomView.setOnPhotoTapListener(new OnPhotoTapListener() {
@@ -121,7 +134,7 @@ public class PreviewPhotosAdapter extends RecyclerView.Adapter<PreviewPhotosAdap
         return photos.size();
     }
 
-    public class PreviewPhotosViewHolder extends RecyclerView.ViewHolder {
+    public static class PreviewPhotosViewHolder extends RecyclerView.ViewHolder {
         public PhotoDraweeView ivZoomView;
         ImageView ivPlay;
 
