@@ -31,6 +31,12 @@ dependencies {
     compileOnly 'com.facebook.fresco:animated-webp:2.4.0'
     compileOnly 'com.facebook.fresco:webpsupport:2.4.0'
     compileOnly 'com.facebook.fresco:imagepipeline-okhttp3:2.4.0'
+
+    //长图支持
+    api 'com.github.piasy:BigImageViewer:1.8.1'
+    api 'com.github.piasy:FrescoImageLoader:1.8.1'
+    api 'com.github.piasy:FrescoImageViewFactory:1.8.1'
+    api 'com.github.filippudak.progresspieview:library:1.0.4'
 }
 
 //// 指定编码

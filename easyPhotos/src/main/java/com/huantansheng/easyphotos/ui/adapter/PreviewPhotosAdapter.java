@@ -2,7 +2,7 @@ package com.huantansheng.easyphotos.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Animatable;
+import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -14,21 +14,18 @@ import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
-import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.imagepipeline.image.ImageInfo;
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+import com.github.piasy.biv.view.BigImageView;
+import com.github.piasy.biv.view.FrescoImageViewFactory;
 import com.huantansheng.easyphotos.R;
 import com.huantansheng.easyphotos.constant.Type;
 import com.huantansheng.easyphotos.models.album.entity.Photo;
 import com.huantansheng.easyphotos.setting.Setting;
+import com.huantansheng.easyphotos.ui.widget.ProgressPieIndicator;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import me.relex.photodraweeview.OnPhotoTapListener;
-import me.relex.photodraweeview.OnScaleChangeListener;
-import me.relex.photodraweeview.PhotoDraweeView;
 
 /**
  * 大图预览界面图片集合的适配器
@@ -76,35 +73,40 @@ public class PreviewPhotosAdapter extends RecyclerView.Adapter<PreviewPhotosAdap
                 }
             });
         }
-        PipelineDraweeControllerBuilder controller = Fresco.newDraweeControllerBuilder();
-        controller.setUri(uri);
-        controller.setAutoPlayAnimations(true); // 这句话让gif动
-        controller.setOldController(holder.ivZoomView.getController());
-        controller.setControllerListener(new BaseControllerListener<ImageInfo>() {
-            @Override
-            public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
-                super.onFinalImageSet(id, imageInfo, animatable);
-                if (imageInfo == null || holder.ivZoomView == null) {
-                    return;
-                }
-                holder.ivZoomView.update(imageInfo.getWidth(), imageInfo.getHeight());
-            }
-        });
-        holder.ivZoomView.setController(controller.build());
+        holder.ivZoomView.setImageViewFactory(new FrescoImageViewFactory());
+        holder.ivZoomView.showImage(uri);
+        holder.ivZoomView.setProgressIndicator(new ProgressPieIndicator());
+        holder.ivZoomView.setInitScaleType(BigImageView.INIT_SCALE_TYPE_CENTER_INSIDE);
 
-        holder.ivZoomView.setScale(1.0f);
-        holder.ivZoomView.setOnPhotoTapListener(new OnPhotoTapListener() {
+        holder.ivZoomView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPhotoTap(View view, float x, float y) {
+            public void onClick(View v) {
                 listener.onPhotoClick();
             }
         });
-        holder.ivZoomView.setOnScaleChangeListener(new OnScaleChangeListener() {
-            @Override
-            public void onScaleChange(float scaleFactor, float focusX, float focusY) {
-                listener.onPhotoScaleChanged();
-            }
-        });
+
+        if (holder.ivZoomView.getSSIV() != null) {
+            holder.ivZoomView.getSSIV().setOnStateChangedListener(new SubsamplingScaleImageView.OnStateChangedListener() {
+                @Override
+                public void onScaleChanged(float newScale, int origin) {
+                    listener.onPhotoScaleChanged();
+                }
+
+                @Override
+                public void onCenterChanged(PointF newCenter, int origin) {
+
+                }
+            });
+        }
+
+
+//
+//        holder.ivZoomView.setOnScaleChangeListener(new OnScaleChangeListener() {
+//            @Override
+//            public void onScaleChange(float scaleFactor, float focusX, float focusY) {
+//                listener.onPhotoScaleChanged();
+//            }
+//        });
     }
 
     private void toPlayVideo(View v, Uri uri, String type) {
@@ -135,7 +137,7 @@ public class PreviewPhotosAdapter extends RecyclerView.Adapter<PreviewPhotosAdap
     }
 
     public static class PreviewPhotosViewHolder extends RecyclerView.ViewHolder {
-        public PhotoDraweeView ivZoomView;
+        public BigImageView ivZoomView;
         ImageView ivPlay;
 
         PreviewPhotosViewHolder(View itemView) {

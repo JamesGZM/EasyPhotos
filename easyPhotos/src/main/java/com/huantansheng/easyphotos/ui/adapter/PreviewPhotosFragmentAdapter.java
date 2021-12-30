@@ -62,11 +62,7 @@ public class PreviewPhotosFragmentAdapter extends RecyclerView.Adapter<PreviewPh
         }
 
         DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setImageRequest(ImageRequestBuilder
-                        .newBuilderWithSource(uri)
-                        .setResizeOptions(
-                                new ResizeOptions(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE))
-                        .build())
+                .setUri(uri)
                 .setAutoPlayAnimations(true)
                 .setOldController(holder.ivPhoto.getController())
                 .build();
