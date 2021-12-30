@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.common.ResizeOptions;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.huantansheng.easyphotos.R;
 import com.huantansheng.easyphotos.constant.Type;
 import com.huantansheng.easyphotos.result.Result;
@@ -60,7 +62,11 @@ public class PreviewPhotosFragmentAdapter extends RecyclerView.Adapter<PreviewPh
         }
 
         DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setUri(uri)
+                .setImageRequest(ImageRequestBuilder
+                        .newBuilderWithSource(uri)
+                        .setResizeOptions(
+                                new ResizeOptions(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE))
+                        .build())
                 .setAutoPlayAnimations(true)
                 .setOldController(holder.ivPhoto.getController())
                 .build();
