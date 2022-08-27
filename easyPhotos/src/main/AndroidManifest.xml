@@ -19,29 +19,29 @@
         <activity
             android:name=".ui.EasyPhotosActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
+            android:screenOrientation="behind"
             android:theme="@style/EasyPhotosTheme" />
         <activity
             android:name=".ui.PreviewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
+            android:screenOrientation="behind"
             android:theme="@style/EasyPhotosFullscreenTheme" />
         <activity
             android:name=".ui.Preview2Activity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
+            android:screenOrientation="behind"
             android:theme="@style/EasyPhotosFullscreenTheme" />
         <activity
             android:name=".ui.PuzzleActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
+            android:screenOrientation="behind"
             android:theme="@style/EasyPhotosTheme"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".ui.PuzzleSelectorActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
+            android:screenOrientation="behind"
             android:theme="@style/EasyPhotosTheme" />
     </application>
 
